@@ -1,8 +1,8 @@
-const authorController = require("../controllers/authorController");
-const blogController = require("../controllers/blogController");
-const middleWare = require("../middlewares/auth");
-const express = require("express");
-const router = express.Router();
+const authorController = require("../controllers/author");
+const blogController = require("../controllers/blog");
+const middleWare = require("../middlewares/middleware");
+const router = require("express").Router();
+
 
 
 
@@ -35,6 +35,11 @@ router.delete("/blog/:blogId",middleWare.authMid1,middleWare.authMid2,blogContro
 
 router.delete("/blogs",middleWare.authMid1,blogController.DeletedByQuery);
 
+
+//--------------------------------------- Invalid Path API ----------------------------------------//
+router.all('/*', (req, res) => {
+    res.status(400).send({ status: false, message: " path invalid" });
+});
 
 
 module.exports = router;
